@@ -55,7 +55,11 @@
 
 Will be restored when the buffer for reviewing the translation is closed.")
 
-(defvar txl-deepl-api-url "https://api.deepl.com/v2/translate"
+; Alte URL, für die freie API ist ein andere URL nötig.
+; (defvar txl-deepl-api-url "https://api.deepl.com/v2/translate"
+;  "URL of the translation API.")
+
+(defvar txl-deepl-api-url "https://api-free.deepl.com/v2/translate"
   "URL of the translation API.")
 
 (defgroup txl nil
@@ -250,15 +254,20 @@ translation can be dismissed via C-c C-k."
     (with-current-buffer (get-buffer-create txl-translation-buffer-name)
       (unless (derived-mode-p 'text-mode)
         (text-mode))
-      (erase-buffer)
+      (generate-new-buffer "deepL translation")  
+      (display-buffer "deepL translation")
+      (with-current-buffer "deepL translation"
+              (org-mode))
+      (other-window 1)
       (insert translation)
       (txl-edit-translation-mode)
       (goto-char (point-min))))
-  (display-buffer txl-translation-buffer-name
-                  '((display-buffer-below-selected display-buffer-at-bottom)
-                    (inhibit-same-window . t)
-                    (window-height . fit-window-to-buffer)))
-  (select-window (get-buffer-window txl-translation-buffer-name)))
+;  (display-buffer txl-translation-buffer-name
+;                  '((display-buffer-below-selected display-buffer-at-bottom)
+;                    (inhibit-same-window . t)
+;                    (window-height . fit-window-to-buffer)))
+;  (select-window (get-buffer-window txl-translation-buffer-name)
+)
 
 (defun txl-accept-translation ()
   "Hide buffer for reviewing and editing, replace original text with translation."
