@@ -55,7 +55,7 @@
 
 Will be restored when the buffer for reviewing the translation is closed.")
 
-; Alte URL, für die freie API ist ein andere URL nötig.
+; Changed the URL to the free API.
 ; (defvar txl-deepl-api-url "https://api.deepl.com/v2/translate"
 ;  "URL of the translation API.")
 
@@ -254,14 +254,21 @@ translation can be dismissed via C-c C-k."
     (with-current-buffer (get-buffer-create txl-translation-buffer-name)
       (unless (derived-mode-p 'text-mode)
         (text-mode))
+
+; These changes display the contents of the translation in other-window.
+
       (generate-new-buffer "deepL translation")  
       (display-buffer "deepL translation")
       (with-current-buffer "deepL translation"
               (org-mode))
       (other-window 1)
-      (insert translation)
+ 
+
+     (insert translation)
       (txl-edit-translation-mode)
       (goto-char (point-min))))
+
+; This code puts the translation in the same window as the source, just below it. For me this makes comparing source and translation more difficult than necessary.
 ;  (display-buffer txl-translation-buffer-name
 ;                  '((display-buffer-below-selected display-buffer-at-bottom)
 ;                    (inhibit-same-window . t)
