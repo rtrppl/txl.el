@@ -262,9 +262,8 @@ translation can be dismissed via C-c C-k."
       (with-current-buffer "deepL translation"
               (org-mode))
       (other-window 1)
- 
 
-     (insert translation)
+      (insert translation)
       (txl-edit-translation-mode)
       (goto-char (point-min))))
 
@@ -288,13 +287,14 @@ translation can be dismissed via C-c C-k."
   "Hide buffer for reviewing and editing translation."
   (interactive)
   (setq-local header-line-format nil)
+  (kill-buffer "deepL translation")
   (set-window-configuration txl-original-window-configuration))
 
 (define-minor-mode txl-edit-translation-mode
   "Minor mode for reviewing and editing translations."
   :keymap (let ((map (make-sparse-keymap)))
             (define-key map (kbd "C-c C-c") 'txl-accept-translation)
-            (define-key map (kbd "C-c C-k") 'txl-dismiss-translation)
+            (define-key map (kbd "q") 'txl-dismiss-translation)
             map)
   (setq-local
    header-line-format
