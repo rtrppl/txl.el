@@ -294,7 +294,7 @@ translation can be dismissed via C-c C-k."
   "Minor mode for reviewing and editing translations."
   :keymap (let ((map (make-sparse-keymap)))
             (define-key map (kbd "C-c C-c") 'txl-accept-translation)
-            (define-key map (kbd "q") 'txl-dismiss-translation)
+            (define-key map (kbd "C-c C-k") 'txl-dismiss-translation)
             map)
   (setq-local
    header-line-format
